@@ -82,13 +82,13 @@ async def callback(event):
         process_msg = await Bot.send_message(event.chat_id, "processing..")
         ext = '.' + name.rsplit('.', 1)[1]
         x = duration // 3
-        os.system(f'''ffmpeg -ss 0 -i "{input}" -to {x} -c copy "{out_folder}/{name.replace(ext, ' - Part - 1'+ext)}"''')
+        os.system(f'''ffmpeg -ss 0 -i "{input}" -to {x} -c copy -y "{out_folder}/{name.replace(ext, ' - Part - 1'+ext)}"''')
         await process_msg.delete()
         process_msg = await Bot.send_message(event.chat_id, "First part done.\nSecond in progress..")
-        os.system(f'''ffmpeg -ss {x} -i "{input}" -to {x+x} -c copy "{out_folder}/{name.replace(ext, ' - Part - 2'+ext)}"''')
+        os.system(f'''ffmpeg -ss {x} -i "{input}" -to {x+x} -c copy -y "{out_folder}/{name.replace(ext, ' - Part - 2'+ext)}"''')
         await process_msg.delete()
         process_msg = await Bot.send_message(event.chat_id, "Second part done.\nThird in progress..")
-        os.system(f'''ffmpeg -ss {x+x} -i "{input}" -to {duration} -c copy "{out_folder}/{name.replace(ext, ' - Part - 3'+ext)}"''')
+        os.system(f'''ffmpeg -ss {x+x} -i "{input}" -to {duration} -c copy -y "{out_folder}/{name.replace(ext, ' - Part - 3'+ext)}"''')
         await process_msg.delete()
         if chatid == 0:
             msg = await Bot.send_message(event.chat_id, 'Done! ' + name)

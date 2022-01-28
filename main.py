@@ -26,6 +26,23 @@ msgid = 0
 chatid = 0
 v=folder+'*/'
 main = folder.rsplit('/', 1)[1] + '\\'
+@Bot.on(events.NewMessage(incoming=True, pattern="^/cancel"))
+async def to_cancel(event):
+    await event.reply('canceled.')
+    exit()
+
+@Bot.on(events.NewMessage(incoming=True, pattern="^/stop"))
+async def to_stop(event):
+    win.activate()
+    kb.press_and_release('pause')
+    await event.reply('stoped. to resume send /resume')
+
+@Bot.on(events.NewMessage(incoming=True, pattern="^/resume"))
+async def to_resume(event):
+    win.activate()
+    kb.press_and_release('enter')
+    await event.reply('resumed.')
+
 @Bot.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def start(event):
     keyboard = []
